@@ -111,8 +111,8 @@ elif(environs['ACTION'] == 'add_section'):
         field_section.send_keys(Keys.ENTER)
 
         navegador.find_element(By.XPATH, 
-                '/html/body/div[3]/div[3]/div/button[1]').click()
+                '/html/body/div[3]/div[3]/div/button[2]').click()
 
         field_email.clear()
 
-# navegador.quit()
+navegador.quit()
