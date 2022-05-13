@@ -1,27 +1,3 @@
-'''
-PASSOS
-
-início:
-1 - abrir o navegador 
-2 - acessar alunos2.kenzie.com.br
-3 - verificar se está logado
-4 - clicar no módulo desejado
-4 - clicar em pessoas 
-
-* criar um arquivo excel com nome e email dos devs
-
-3 ações: Adicionar estudante (add_student) | adicionar seção (add_section_to_student) | padronizar nomes (change_names) 
-
-no for: 
-5 - escrever email do dev no campo de pesquisa 
-6 - clicar nos 3 pontinhos 
-7 - clicar em 'editar seções'
-8 - escrever nome de seção 
-9 - pressionar 'enter'
-10 - clicar no botão atualizar
-11 - apagar email do campo de pesquisa
-
-'''
 import dotenv
 import time
 import pandas as pd
