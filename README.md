@@ -2,7 +2,7 @@
 
 ## Requisitos
 
-- Um arquivo no formato xlsx(excel) contendo uma coluna "E-mail" com todos os emails dos seus devs
+- Um arquivo no formato xlsx(excel) contendo duas colunas: "Nome" e "Email" referentes aos seus devs
     - O arquivo pode ser baixado do Google Sheets, você não precisa ter excel instalado 
 
 - Um WebDriver do seu navegador instalado na máquina 
@@ -17,7 +17,7 @@
 
 2. Criar uma planilha no Google Sheets ou no excel chamada **students**
 
-3. Compor a planilha com uma coluna denominada **E-mail** e preenchê-la com todos os emails dos seus devs
+3. Compor a planilha com uma coluna denominada **Email** e preenchê-la com todos os emails dos seus devs
 
 4. Caso tenha sido criada com o Google Sheets, fazer o download dessa planilha no formato .xlsx 
 
@@ -29,19 +29,12 @@
 
 2. **PASSWORD_CANVAS** = Senha que o facilitador utiliza para acessar o Canvas
 
-3. **MODULE_PATH** = XPATH 
+3. **MODULE_PATH** = XPATH completo do elemento da página correspondente ao módulo atual
 
-4. **LOADING_TIME** = É o tempo em segundos de intervalo entre algumas ações durante o processo automatizado. Isso vai depender da velocidade da sua máquina. 
-    - Sugestão: mínimo 5 segundos
+4. **ACTION** = Ação que você deseja fazer:
 
-5. **ACTION** = Qual ação que você deseja fazer:
+    a) **add_section** = Adicionar sua sessão específica a um ou mais estudantes
 
-    a) **add_student** = Adicionar um ou mais estudantes no módulo 
+    b) **change_names** = mudar nome ordenável de um ou mais estudantes (ainda não implementada)
 
-    b) **add_section** = Adicionar sua sessão específica a um ou mais estudantes
-
-    c) **change_names** = mudar nome ordenável de um ou mais estudantes
-
-6. **MODULE_SECTION** = Seção geral do módulo em que fica todos os estudantes da turma
-
-7. **FACILITADOR_SECTION** = Seção do facilitador onde fica somente os estudantes da turma dele
+5. **FACILITADOR_SECTION** = Seção do facilitador onde fica somente os estudantes da turma dele
