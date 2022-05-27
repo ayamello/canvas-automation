@@ -117,7 +117,7 @@ if(environs['ACTION'] == 'add_section' or environs['ACTION'] == 'change_names'):
                 display_name_field.clear()
                 display_name_field.send_keys(list_names[i])
 
-                btn_update_user = browser.find_element(By.XPATH, '/html/body/div[3]/div[2]/form/div/button[1]')
+                btn_update_user = browser.find_element(By.XPATH, '/html/body/div[3]/div[2]/form/div/button[2]')
                 btn_update_user.click()
                     
                 link_peoples_back = WebDriverWait(browser, timeout=2).until(EC.visibility_of_element_located((By.XPATH, 
