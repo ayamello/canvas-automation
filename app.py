@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
 
 
 dotenv.load_dotenv()
@@ -18,10 +19,10 @@ list_emails = ', '.join(list(table['Email']))
 
 list_names = list(table['Nome'])
 #################################################################
-options = webdriver.EdgeOptions()
+options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
-browser = webdriver.Edge(options=options)
+browser = webdriver.Chrome(options=options)
 
 browser.get('https://alunos2.kenzie.com.br')
 
@@ -37,6 +38,8 @@ input_password.send_keys(environs['PASSWORD_CANVAS'] + Keys.ENTER)
 
 module = WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH, environs['MODULE_PATH']))
 module.click()
+
+time.sleep(2)
 
 link_peoples = WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH, 
                                         '/html/body/div[2]/div[2]/div[2]/div[2]/nav/ul/li[6]/a'))
@@ -65,10 +68,11 @@ link_peoples.click()
 ######################## Add students list to a section canvas or change names students list ##########################
 if(environs['ACTION'] == 'add_section' or environs['ACTION'] == 'change_names'):
     array_emails = list_emails.split(', ')
-
+    
     for i in range(len(array_emails)):
-        field_email = browser.find_element(By.XPATH,
-                                           '/html/body/div[2]/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[2]/input')
+        time.sleep(2)
+        field_email = WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH,
+                                           '/html/body/div[2]/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[2]/input'))
         field_email.send_keys(array_emails[i])
 
         time.sleep(2)
@@ -90,16 +94,40 @@ if(environs['ACTION'] == 'add_section' or environs['ACTION'] == 'change_names'):
             field_section.send_keys(Keys.ENTER)
 
             WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH,
-                                                            '/html/body/div[3]/div[3]/div/button[2]')).click()
+                                                            '/html/body/div[3]/div[3]/div/button[1]')).click()
 
             field_email.clear()
-        # else:
-        #     btn_user_details = browser.find_element(By.XPATH,
-        #                                             '/html/body/div[2]/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[2]/div/div[2]/table/tbody/tr[1]/td[9]/div/ul/li[4]')
-        #     btn_user_details.click()
+        else:
+            btn_user_details = WebDriverWait(browser, timeout=5).until(EC.visibility_of_element_located((By.XPATH,
+                    '/html/body/div[2]/div[2]/div[2]/div[3]/div[1]/div/div[2]/div/div[2]/div/div[2]/table/tbody/tr[1]/td[9]/div/ul/li[4]')))
+            btn_user_details.click()
+            time.sleep(2)
+            
+            try:
+                btn_user_edit = browser.find_element(By.XPATH, 
+                                            '/html/body/div[2]/div[2]/div[2]/div[3]/div[1]/div/fieldset/table/tbody/tr[6]/td/a[1]')
+                btn_user_edit.click()
 
-        #     time.sleep(int(environs['LOADING_TIME']))
+                full_name_field = WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH, 
+                                                '/html/body/div[3]/div[2]/form/table/tbody/tr[1]/td[2]/input'))
+                full_name_field.send_keys(list_names[i])
+                    
+                display_name_field = browser.find_element(By.XPATH, 
+                                                '/html/body/div[3]/div[2]/form/table/tbody/tr[3]/td[2]/input')
+                display_name_field.clear()
+                display_name_field.send_keys(list_names[i])
 
-            # continua
-
+                btn_update_user = browser.find_element(By.XPATH, '/html/body/div[3]/div[2]/form/div/button[1]')
+                btn_update_user.click()
+                    
+                link_peoples_back = WebDriverWait(browser, timeout=2).until(EC.visibility_of_element_located((By.XPATH, 
+                                                '/html/body/div[2]/div[2]/div[2]/div[2]/nav/ul/li[6]/a')))
+                link_peoples_back.click()
+                time.sleep(2)
+            except NoSuchElementException:
+                link_peoples_back = WebDriverWait(browser, timeout=2).until(EC.visibility_of_element_located((By.XPATH, 
+                                            '/html/body/div[2]/div[2]/div[2]/div[2]/nav/ul/li[6]/a')))
+                link_peoples_back.click()
+                time.sleep(2)
+            
 browser.quit()
