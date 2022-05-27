@@ -90,7 +90,7 @@ if(environs['ACTION'] == 'add_section' or environs['ACTION'] == 'change_names'):
             field_section.send_keys(Keys.ENTER)
 
             WebDriverWait(browser, timeout=3).until(lambda b: b.find_element(By.XPATH,
-                                                            '/html/body/div[3]/div[3]/div/button[1]')).click()
+                                                            '/html/body/div[3]/div[3]/div/button[2]')).click()
 
             field_email.clear()
         # else:
